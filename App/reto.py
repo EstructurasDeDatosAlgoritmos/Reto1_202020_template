@@ -82,6 +82,24 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def loadDetails ():
+    lst = loadCSVFile("Data/themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
+    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
+    return lst
+
+def ranking_genero (No_peliculas, criteria_r, criteria_o, lista_Details):    #Requerimiento 6
+    buscar_genero = lt.newList('SINGLE_LINKED', None)
+    genero = input("Ingrese el nombre del genero:\n")
+
+    t1_start = process_time() #Inicio de cronometro 
+
+    iter = it.newIterator(lista_Details)
+    while it.hasNext(iter):
+        c = it.next(iter)
+        if c["genres"] == genero:
+            lt.addFirst(buscar_genero, c)
+
+
 
 def main():
     """
@@ -100,6 +118,7 @@ def main():
 
             if int(inputs[0])==1: #opcion 1
                 lstmovies = loadMovies()
+                lstDetails = loadDetails()
 
             elif int(inputs[0])==2: #opcion 2
                 pass
