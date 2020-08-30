@@ -91,7 +91,7 @@ def ranking_genero (No_peliculas, criteria_r, criteria_o, lista_Details):    #Re
     buscar_genero = lt.newList('SINGLE_LINKED', None)
     genero = input("Ingrese el nombre del genero:\n")
 
-    t1_start = process_time() #Inicio de cronometro
+    t1_start = process_time() #Inicio de cronometro 
 
     iter = it.newIterator(lista_Details)
     while it.hasNext(iter):
