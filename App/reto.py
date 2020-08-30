@@ -82,6 +82,65 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def peliculas_por_director(criteria, column, lst):
+    peliculas_director=lt.newList("ARRAY_LIST",None)
+    if len(lst)==0:
+        print("La lista esta vacía")  
+        return 0
+    else:
+        iterator=it.newIterator(lst)
+        while it.hasNext(iterator):
+            element=it.next(iterator)
+            if criteria.lower() in element[column].lower():
+                lt.addLast(peliculas_director,element["id"])
+    return peliculas_director
+
+
+def conocer_director(criteria, column, lstC,lstD):
+    t1_start = process_time() #tiempo inicial
+    sum_average=0
+    lista_director=lt.newList("ARRAY_LIST", None)
+    peliculas_director=peliculas_por_director(criteria,"director_name",lstC)
+    if (lstD["size"])==0:
+        print("La lista esta vacía")  
+        return 0
+    else:
+        iterator2=it.newIterator(lstD)
+        while it.hasNext(iterator2):
+            element=it.next(iterator2)
+            if element["id"] in peliculas_director["elements"]:
+                sum_average+=float(element["vote_average"])
+                lt.addFirst(lista_director,element["original_title"])
+        promedio=round((sum_average/lista_director["size"]),3)
+        t1_stop = process_time() #tiempo final
+        print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+        return (lista_director,promedio)
+
+def conocer_actor(criteria, column, lstC, lstD):
+    t1_start = process_time()
+    promedio = 0
+    peli_actor = lt.newList("ARRAY_LIST", None)
+    
+
+
+def entender_genero(criteria,column,lstD):
+    t1_start=process_time()#tiempo inicial
+    sum_count=0
+    lista_genero=lt.newList("ARRAY_LIST",None)
+    if lstD["size"]==0:
+        print("la lista esta vacía")
+    else:
+        iterator=it.newIterator(lstD)
+        while it.hasNext(iterator):
+            element=it.next(iterator)
+            if criteria.lower() in element[column].lower():
+                lt.addLast(lista_genero,element["original_title"])
+                sum_count+=float((element["vote_average"]))
+        promedio=round((sum_count/lista_genero["size"]),3)
+        t1_stop = process_time() #tiempo final
+        print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+        return (lista_genero,promedio)
+
 
 def main():
     """
