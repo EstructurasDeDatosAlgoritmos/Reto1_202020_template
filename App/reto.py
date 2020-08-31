@@ -87,7 +87,7 @@ def loadDetails ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def ranking_genero (No_peliculas, criteria_r, criteria_o, lista_Details):    #Requerimiento 6
+def ranking_genero (lista_Details):                  #Requerimiento 6
     buscar_genero = lt.newList('SINGLE_LINKED', None)
     genero = input("Ingrese el nombre del genero:\n")
 
@@ -98,6 +98,16 @@ def ranking_genero (No_peliculas, criteria_r, criteria_o, lista_Details):    #Re
         c = it.next(iter)
         if c["genres"] == genero:
             lt.addFirst(buscar_genero, c)
+
+    No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")
+    criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")
+    criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")
+    
+    if (criteria_r == "count"):
+        iter2 = it.newIterator(buscar_genero)
+        while it.hasNext(iter2):
+            d = it.next(iter2)
+        
 
 
 
