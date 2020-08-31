@@ -93,22 +93,94 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
 
     t1_start = process_time() #Inicio de cronometro 
 
+    #Filtrar las peliculas por genero
+
     iter = it.newIterator(lista_Details)
     while it.hasNext(iter):
         c = it.next(iter)
         if c["genres"] == genero:
             lt.addFirst(buscar_genero, c)
 
+    #Pedir parametros al usuario
+
     No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")
     criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")
     criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")
     
-    if (criteria_r == "count"):
-        iter2 = it.newIterator(buscar_genero)
-        while it.hasNext(iter2):
-            d = it.next(iter2)
-        
+    #Crear Ranking
 
+    generos_ordenados = lt.newList('SINGLE_LINKED', None)
+    PARAMETROS_NO = "Parametro no valido"         #Variable para comprobar que todos los parametros hayan sido procesados
+    cont = 0                                      #Variable para contar las peliculas en el ranking
+    if (criteria_o == "ascendente"and No_peliculas >= 10):
+        mayor = 0
+        if (criteria_r == "count"):
+            iter2 = it.newIterator(buscar_genero)
+            while it.hasNext(iter2):
+                d = it.next(iter2)
+                
+                if (cont == No_peliculas):
+                    break
+                elif(d["vote_count"] >= mayor):
+                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    mayor = d["vote_count"]
+                else:
+                    lt.insertElement(generos_ordenados,d, mayor - 1)
+                cont += 1
+        elif (criteria_r == "average"):
+            iter2 = it.newIterator(buscar_genero)
+            while it.hasNext(iter2):
+                d = it.next(iter2)
+                
+                if (cont == No_peliculas):
+                    break
+                elif(d["vote_average"] >= mayor):
+                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    mayor = d["vote_average"]
+                else:
+                    lt.insertElement(generos_ordenados,d, mayor - 1)
+        else:
+            return PARAMETROS_NO
+
+    elif (criteria_o == "descendente"and No_peliculas >= 10):
+        menor = 0
+        if (criteria_r == "count"):
+            iter2 = it.newIterator(buscar_genero)
+            while it.hasNext(iter2):
+                d = it.next(iter2)
+                
+                if (cont == No_peliculas):
+                    break
+                elif(d["vote_count"] <= menor):
+                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    menor = d["vote_count"]
+                else:
+                    lt.insertElement(generos_ordenados,d, mayor - 1)
+        elif (criteria_r == "average"):
+            iter2 = it.newIterator(buscar_genero)
+            while it.hasNext(iter2):
+                d = it.next(iter2)
+                
+                if (cont == No_peliculas):
+                    break
+                elif(d["vote_average"] <= menor):
+                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    menor = d["vote_average"]
+                else:
+                    lt.insertElement(generos_ordenados,d, mayor - 1)
+        else:
+            return PARAMETROS_NO
+    else:
+        return PARAMETROS_NO
+                    
+    #Imprimir ranking
+ 
+    print("Película, Genero,vote_average, vote_count")
+    iterfinal = it.newIterator(generos_ordenados)
+    while it.hasNext(iterfinal):
+        f = it.next(iterfinal)
+        if f["genres"] == genero:
+            lt.addFirst(buscar_genero, c)
 
 
 def main():
