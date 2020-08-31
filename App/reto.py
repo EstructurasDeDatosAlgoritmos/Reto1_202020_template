@@ -82,6 +82,12 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def loadDetails():
+    lst=loadCSVFile("theMoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds)
+    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
+    return lst
+
+"2 def ranking(criteria, column, lst):"
 def peliculas_por_director(criteria, column, lst):
     peliculas_director=lt.newList("ARRAY_LIST",None)
     if len(lst)==0:
@@ -118,10 +124,40 @@ def conocer_director(criteria, column, lstC,lstD):
 
 def conocer_actor(criteria, column, lstC, lstD):
     t1_start = process_time()
-    promedio = 0
+    suma = 0
     peli_actor = lt.newList("ARRAY_LIST", None)
-    
+    peliculas = peliculas_por_director(criteria, "actor1_name", lstC)
+    peliculas1 = peliculas_por_director(criteria, "actor2_name", lstC)
+    peliculas2 = peliculas_por_director(criteria, "actor3_name", lstC)
+    peliculas3 = peliculas_por_director(criteria, "actor4_name", lstC)
+    peliculas4 = peliculas_por_director(criteria, "actor5_name", lstC)
 
+    if (lstD["size"]) == 0:
+        print("La Lista esta vacía")
+        return 0
+    
+    else:
+        iterador = it.newIterator(lstD)
+        while it.hasNext(iterador):
+            if element["id"] in peliculas["elements"]:
+                suma = suma + float(element["vote_average"])
+                lt.addFirst(peli_actor, element["original_title"])
+            elif element["id"] in peliculas1["elements"]:
+                suma = suma + float(element["vote_average"])
+                lt.addFirst(peli_actor, element["original_title"])
+            elif element["id"] in peliculas2["elements"]:
+                suma = suma + float(element["vote_average"])
+                lt.addFirst(peli_actor, element["original_title"])
+            elif element["id"] in peliculas3["elements"]:
+                suma = suma + float(element["vote_average"])
+                lt.addFirst(peli_actor, element["original_title"])
+            elif element["id"] in peliculas4["elements"]:
+                suma = suma + float(element["vote_average"])
+                lt.addFirst(peli_actor, element["original_title"])
+        prom = round((sum_average/peli_actor["size"]),3)
+        t1_stop = process_time()
+        print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+        return (peli_actor, len(peli_actor), prom)
 
 def entender_genero(criteria,column,lstD):
     t1_start=process_time()#tiempo inicial
@@ -151,7 +187,7 @@ def main():
     Return: None 
     """
 
-
+    lista = lt.newList()
     while True:
         printMenu() #imprimir el menu de opciones en consola
         inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
@@ -159,15 +195,28 @@ def main():
 
             if int(inputs[0])==1: #opcion 1
                 lstmovies = loadMovies()
+                lstdetails = loadDetails()
 
             elif int(inputs[0])==2: #opcion 2
+
                 pass
 
             elif int(inputs[0])==3: #opcion 3
-                pass
+                if lista==None or lista['size']==0: #obtener la longitud de la lista
+                    print("La lista esta vacía")
+                else:   
+                    criteria = input('Ingrese el criterio de búsqueda\n')
+                    x = conocer_director(criteria, column ,lstC, lstD) #filtrar una columna por criterio  
+                    print("Coinciden ",x," elementos con el director: ",criteria)
 
             elif int(inputs[0])==4: #opcion 4
-                pass
+                if lista==None or lista['size']==0: #obtener la longitud de la lista
+                    print("La lista esta vacía")
+                else:   
+                    criteria = input('Ingrese el criterio de búsqueda\n')
+                    x = conocer_actor(criteria, column ,lstC, lstD) #filtrar una columna por criterio  
+                    print("Coinciden ",x," elementos con el actor: ",criteria)
+
 
             elif int(inputs[0])==3: #opcion 5
                 pass
