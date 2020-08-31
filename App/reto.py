@@ -152,10 +152,10 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 if (cont == No_peliculas):
                     break
                 elif(d["vote_count"] <= menor):
-                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    lt.insertElement(generos_ordenados,d, menor + 1)
                     menor = d["vote_count"]
                 else:
-                    lt.insertElement(generos_ordenados,d, mayor - 1)
+                    lt.insertElement(generos_ordenados,d, menor - 1)
         elif (criteria_r == "average"):
             iter2 = it.newIterator(buscar_genero)
             while it.hasNext(iter2):
@@ -164,24 +164,40 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 if (cont == No_peliculas):
                     break
                 elif(d["vote_average"] <= menor):
-                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    lt.insertElement(generos_ordenados,d, menor + 1)
                     menor = d["vote_average"]
                 else:
-                    lt.insertElement(generos_ordenados,d, mayor - 1)
+                    lt.insertElement(generos_ordenados,d, menor - 1)
         else:
             return PARAMETROS_NO
     else:
         return PARAMETROS_NO
-                    
+    
+    Peliculas_en_ranking = lt.size(generos_ordenados)
+    Votos_totales = 0
+    Votos_Promedio = 0.0
+  
     #Imprimir ranking
  
-    print("Película, Genero,vote_average, vote_count")
+    print("Película       ,  Genero  , Vote_Average , Vote_Count")
     iterfinal = it.newIterator(generos_ordenados)
     while it.hasNext(iterfinal):
-        f = it.next(iterfinal)
-        if f["genres"] == genero:
-            lt.addFirst(buscar_genero, c)
 
+        f = it.next(iterfinal)
+
+        Votos_totales = Votos_totales + int(f["vote_count"])
+        Votos_Promedio = Votos_Promedio + float(f["vote_average"])
+        Pel = str(f["original_title"])
+        Gen = str(f["genres"])
+        Av = str(f["vote_average"])
+        Co = str(f["vote_count"])
+
+        print(Pel +" "+ Gen +" "+ Av +" "+ Co)
+
+    Promedio = Votos_Promedio/Peliculas_en_ranking
+
+    print("Promedio(Vote average): " + Promedio)
+    print("Votos totales: " + Votos_totales)
 
 def main():
     """
