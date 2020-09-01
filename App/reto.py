@@ -319,7 +319,7 @@ def entender_genero(criteria,column,lstD): #Requerimiento 5
         print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
         return (lista_genero,promedio)
 
-def ranking_genero (lista_Details):                  #Requerimiento 6
+def ranking_genero (lista_Details, genero, No_peliculas, criteria_r, criteria_o):                  #Requerimiento 6
     buscar_genero = lt.newList('SINGLE_LINKED', None)
     #------------------------------------
 
@@ -504,7 +504,7 @@ def main():
                     No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")#------------------------------------
                     criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")#------------------------------------
                     criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")#------------------------------------
-                    x = ranking_genero(lstDetails, genero, No_peliculas, criteria_r, criteria_o)
+                    x = ranking_genero(lstdetails, genero, No_peliculas, criteria_r, criteria_o)
                     print("Gracias",x)
 
             elif int(inputs[0])==0: #opcion 0, salir
