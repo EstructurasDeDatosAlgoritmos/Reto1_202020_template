@@ -98,8 +98,13 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
     iter = it.newIterator(lista_Details)
     while it.hasNext(iter):
         c = it.next(iter)
-        if c["genres"] == genero:
-            lt.addFirst(buscar_genero, c)
+        genero_separado = c["genres"].split("|")
+        i = 0
+        tam = len(genero_separado)
+        while i < tam:
+            if (genero_separado[i] == genero):
+                lt.addFirst(buscar_genero, c)
+            i += 1
 
     #Pedir parametros al usuario
 
@@ -227,11 +232,11 @@ def main():
             elif int(inputs[0])==4: #opcion 4
                 pass
 
-            elif int(inputs[0])==3: #opcion 5
+            elif int(inputs[0])==5: #opcion 5
                 pass
 
-            elif int(inputs[0])==4: #opcion 6
-                pass
+            elif int(inputs[0])==6: #opcion 6
+                Crear_ranking = ranking_genero(lstDetails)
 
 
             elif int(inputs[0])==0: #opcion 0, salir
