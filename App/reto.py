@@ -83,7 +83,7 @@ def loadMovies ():
     return lst
 
 def loadDetails ():
-    lst = loadCSVFile("Data/themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
+    lst = loadCSVFile("themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
@@ -198,6 +198,9 @@ def ranking_genero (lista_Details, genero, No_peliculas, criteria_r, criteria_o)
 
     print("Promedio(Vote average): " + Promedio)
     print("Votos totales: " + Votos_totales)
+
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
 
 def main():
     """
