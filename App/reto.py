@@ -82,6 +82,7 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+<<<<<<< HEAD
 def loadDetails():
     lst=loadCSVFile("theMoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds)
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
@@ -261,19 +262,31 @@ def entender_genero(criteria,column,lstD): #Requerimiento 5
         return (lista_genero,promedio)
 
 def ranking_genero (lista_Details):                  #Requerimiento 6
+=======
+def loadDetails ():
+    lst = loadCSVFile("Data/themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
+    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
+    return lst
+
+def ranking_genero (No_peliculas, criteria_r, criteria_o, lista_Details):    #Requerimiento 6
+>>>>>>> cf0ba6a45fc2dcc5c214fa4f60de9805179a37f1
     buscar_genero = lt.newList('SINGLE_LINKED', None)
     genero = input("Ingrese el nombre del genero:\n")
 
     t1_start = process_time() #Inicio de cronometro 
 
+<<<<<<< HEAD
     #Filtrar las peliculas por genero
 
+=======
+>>>>>>> cf0ba6a45fc2dcc5c214fa4f60de9805179a37f1
     iter = it.newIterator(lista_Details)
     while it.hasNext(iter):
         c = it.next(iter)
         if c["genres"] == genero:
             lt.addFirst(buscar_genero, c)
 
+<<<<<<< HEAD
     #Pedir parametros al usuario
 
     No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")
@@ -371,6 +384,8 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
 
     print("Promedio(Vote average): " + Promedio)
     print("Votos totales: " + Votos_totales)
+=======
+>>>>>>> cf0ba6a45fc2dcc5c214fa4f60de9805179a37f1
 
 
 def main():
@@ -388,7 +403,11 @@ def main():
         if len(inputs)>0:
             if int(inputs[0])==1: #opcion 1
                 lstmovies = loadMovies()
+<<<<<<< HEAD
                 lstdetails = loadDetails()
+=======
+                lstDetails = loadDetails()
+>>>>>>> cf0ba6a45fc2dcc5c214fa4f60de9805179a37f1
 
             elif int(inputs[0])==2: #opcion 2
                 if lstdetails == None or lstdetails['size'] == 0: #obtener la longitud de la lista
@@ -439,6 +458,6 @@ def main():
             elif int(inputs[0])==0: #opcion 0, salir
                 print("Vuelva pronto")
                 sys.exit(0)
-                
+             
 if __name__ == "__main__":
     main()
