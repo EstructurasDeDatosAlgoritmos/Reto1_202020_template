@@ -87,9 +87,9 @@ def loadDetails ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def ranking_genero (lista_Details):                  #Requerimiento 6
+def ranking_genero (lista_Details, genero, No_peliculas, criteria_r, criteria_o):                  #Requerimiento 6
     buscar_genero = lt.newList('SINGLE_LINKED', None)
-    genero = input("Ingrese el nombre del genero:\n")
+    #------------------------------------
 
     t1_start = process_time() #Inicio de cronometro 
 
@@ -106,11 +106,6 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 lt.addFirst(buscar_genero, c)
             i += 1
 
-    #Pedir parametros al usuario
-
-    No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")
-    criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")
-    criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")
     
     #Crear Ranking
 
@@ -126,9 +121,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
-                elif(d["vote_count"] >= mayor):
+                elif(int(d["vote_count"]) >= mayor):
                     lt.insertElement(generos_ordenados,d, mayor + 1)
-                    mayor = d["vote_count"]
+                    mayor = int(d["vote_count"])
                 else:
                     lt.insertElement(generos_ordenados,d, mayor - 1)
                 cont += 1
@@ -139,9 +134,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
-                elif(d["vote_average"] >= mayor):
+                elif(float(d["vote_average"]) >= mayor):
                     lt.insertElement(generos_ordenados,d, mayor + 1)
-                    mayor = d["vote_average"]
+                    mayor = float(d["vote_average"])
                 else:
                     lt.insertElement(generos_ordenados,d, mayor - 1)
         else:
@@ -156,9 +151,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
-                elif(d["vote_count"] <= menor):
+                elif(int(d["vote_count"]) <= menor):
                     lt.insertElement(generos_ordenados,d, menor + 1)
-                    menor = d["vote_count"]
+                    menor = int(d["vote_count"])
                 else:
                     lt.insertElement(generos_ordenados,d, menor - 1)
         elif (criteria_r == "average"):
@@ -168,9 +163,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
-                elif(d["vote_average"] <= menor):
+                elif(float(d["vote_average"]) <= menor):
                     lt.insertElement(generos_ordenados,d, menor + 1)
-                    menor = d["vote_average"]
+                    menor = float(d["vote_average"])
                 else:
                     lt.insertElement(generos_ordenados,d, menor - 1)
         else:
@@ -236,7 +231,12 @@ def main():
                 pass
 
             elif int(inputs[0])==6: #opcion 6
-                Crear_ranking = ranking_genero(lstDetails)
+                genero = input("Ingrese el nombre del genero:\n")
+                No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")#------------------------------------
+                criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")#------------------------------------
+                criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")#------------------------------------
+    
+                Crear_ranking = ranking_genero(lstDetails, genero, No_peliculas, criteria_r, criteria_o)
 
 
             elif int(inputs[0])==0: #opcion 0, salir
