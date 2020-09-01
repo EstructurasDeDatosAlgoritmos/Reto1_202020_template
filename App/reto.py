@@ -321,7 +321,7 @@ def entender_genero(criteria,column,lstD): #Requerimiento 5
 
 def ranking_genero (lista_Details):                  #Requerimiento 6
     buscar_genero = lt.newList('SINGLE_LINKED', None)
-    genero = input("Ingrese el nombre del genero:\n")
+    #------------------------------------
 
     t1_start = process_time() #Inicio de cronometro 
 
@@ -330,14 +330,13 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
     iter = it.newIterator(lista_Details)
     while it.hasNext(iter):
         c = it.next(iter)
-        if c["genres"] == genero:
-            lt.addFirst(buscar_genero, c)
-
-    #Pedir parametros al usuario
-
-    No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")
-    criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")
-    criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")
+        genero_separado = c["genres"].split("|")
+        i = 0
+        tam = len(genero_separado)
+        while i < tam:
+            if (genero_separado[i] == genero):
+                lt.addFirst(buscar_genero, c)
+            i += 1
     
     #Crear Ranking
 
@@ -353,6 +352,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
+                elif(int(d["vote_count"]) >= mayor):
+                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    mayor = int(d["vote_count"])
                 elif(d["vote_count"] >= mayor):
                     lt.insertElement(generos_ordenados,d, mayor + 1)
                     mayor = d["vote_count"]
@@ -366,6 +368,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
+                elif(float(d["vote_average"]) >= mayor):
+                    lt.insertElement(generos_ordenados,d, mayor + 1)
+                    mayor = float(d["vote_average"])
                 elif(d["vote_average"] >= mayor):
                     lt.insertElement(generos_ordenados,d, mayor + 1)
                     mayor = d["vote_average"]
@@ -383,6 +388,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
+                elif(int(d["vote_count"]) <= menor):
+                    lt.insertElement(generos_ordenados,d, menor + 1)
+                    menor = int(d["vote_count"])
                 elif(d["vote_count"] <= menor):
                     lt.insertElement(generos_ordenados,d, menor + 1)
                     menor = d["vote_count"]
@@ -395,6 +403,9 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
                 
                 if (cont == No_peliculas):
                     break
+                elif(float(d["vote_average"]) <= menor):
+                    lt.insertElement(generos_ordenados,d, menor + 1)
+                    menor = float(d["vote_average"])
                 elif(d["vote_average"] <= menor):
                     lt.insertElement(generos_ordenados,d, menor + 1)
                     menor = d["vote_average"]
@@ -430,6 +441,8 @@ def ranking_genero (lista_Details):                  #Requerimiento 6
 
     print("Promedio(Vote average): " + Promedio)
     print("Votos totales: " + Votos_totales)
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
 
 
 def main():
@@ -475,8 +488,6 @@ def main():
                     criteria = input('Ingrese el nombre del actor: \n')
                     x = conocer_actor(criteria,lstmovies, lstdetails) #filtrar una columna por criterio  
                     print("Coinciden ",x," elementos con el actor: ",criteria)
-
-
             elif int(inputs[0])==3: #opcion 5
                 if lstmovies == None or lstmovies['size'] == 0 and lstdetails == None or lstdetails['size'] == 0: #obtener la longitud de la lista
                     print("La lista esta vacía")
@@ -489,9 +500,12 @@ def main():
                 if lstdetails == None or lstdetails['size'] == 0: #obtener la longitud de la lista
                     print("La lista esta vacía")
                 else:
-                    x = ranking_genero(lista_Details)
+                    genero = input("Ingrese el nombre del genero:\n")
+                    No_peliculas = input("Ingrese el número de películas (Mínimo 10):\n")#------------------------------------
+                    criteria_r = input("Ingrese el criterio del ranking (count o average)::\n")#------------------------------------
+                    criteria_o = input("Ingrese el criterio de ordenamiento (ascendente o descendente):\n")#------------------------------------
+                    x = ranking_genero(lstDetails, genero, No_peliculas, criteria_r, criteria_o)
                     print("Gracias",x)
-
 
             elif int(inputs[0])==0: #opcion 0, salir
                 print("Vuelva pronto")
