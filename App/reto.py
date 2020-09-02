@@ -278,23 +278,30 @@ def conocer_actor(criteria, lstC, lstD): #Requerimiento 4
     
     else:
         iterador = it.newIterator(lstD)
-        while it.hasNext(iterador):
+        iterador2 = it.newIterator(lstC)
+        while it.hasNext(iterador) and it.hasNext(iterador2):
             element = it.next(iterador)
+            element2 = it.next(iterador2)
             if element["id"] in peliculas_actor["elements"]:
                 suma = suma + float(element["vote_average"])
-                lt.addFirst(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element2["director_name"])
             elif element["id"] in peliculas_actor2["elements"]:
                 suma = suma + float(element["vote_average"])
-                lt.addFirst(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element2["director_name"])
             elif element["id"] in peliculas_actor3["elements"]:
                 suma = suma + float(element["vote_average"])
-                lt.addFirst(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element2["director_name"])
             elif element["id"] in peliculas_actor4["elements"]:
                 suma = suma + float(element["vote_average"])
-                lt.addFirst(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element2["director_name"])
             elif element["id"] in peliculas_actor5["elements"]:
                 suma = suma + float(element["vote_average"])
-                lt.addFirst(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element["original_title"])
+                lt.addLast(peli_actor, element2["director_name"])
 
         prom = round((suma/peli_actor["size"]),3)
         t1_stop = process_time()
